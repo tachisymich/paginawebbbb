@@ -1,178 +1,33 @@
-﻿<html>
-<head>
-<title>Collage</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
-<body>
+from pathlib import Path
+import re
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="index.html">INICIO</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+src = Path("/mnt/data/villalobospag4.html")
+html = src.read_text(encoding="utf-8", errors="ignore")
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="villalobospag5.html">PEDIDOS<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="villalobospag1.html">TRAYECTORIA</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="villalobospag2.html" tabindex="-1" aria-disabled="true">ALBUMES</a>
-      </li>
-         <li class="nav-item active">
-        <a class="nav-link" href="villalobospag3.html" tabindex="-1" aria-disabled="true">MERCH</a>
-      </li>
-         <li class="nav-item active">
-        <a class="nav-link" href="villalobospag4.html" tabindex="-1" aria-disabled="true">COLLAGE</a>
-      </li>
-       <li class="nav-item active">
-        <a class="nav-link" href="indexbio.html">PERFIL</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">BUSCAR</button>
-    </form>
-  </div>
-</nav>
+if "<!DOCTYPE html>" not in html:
+    html = "<!DOCTYPE html>\n" + html
 
-<img src="img/foto5.jpg" WIDTH="100%" height="35%" ALIGN="MIDDLE">
-<h1 Align="CENTER">Collage</h1>
+html = html.replace("<head>", """<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+""", 1)
 
-<br>
+# quitar img/
+html = html.replace("src=\"img/", "src=\"")
 
+# corregir enlaces
+html = html.replace('href="hhttps://x.com', 'href="https://x.com')
+html = html.replace('href="hhttps://www.facebook.com', 'href="https://www.facebook.com')
 
-<table width="90%" Align="center" Border="7">
-    <tr Align="center">
-        
-    </tr>
-</table>
+# corregir titulo
+html = html.replace('<h1 Align="CENTER">Collage</h1>',
+                    '<h1 class="text-center my-4">COLLAGE</h1>')
 
-<br>
-<br>
+# corregir hr roto
+html = html.replace('<hr align="center <hr align="center" width="100" size="5" noshade>',
+                    '<hr width="80%">')
 
+out = "/mnt/data/villalobospag4_corregido.html"
+Path(out).write_text(html, encoding="utf-8")
 
-<br>
-
-
- <tr text-align=Center align="center">
-                <td><a><img src="img/collage.jpg" style="display: block; margin: 0 auto;" width="70%"></a></td>
-                </tr>
-<br>
-<br>
-
-<table width="80%" align="center" border="3">
-    <tr>
-        <td style="vertical-align: top; padding: 15px;">
-            <ul>
-                <li>
-                    EL MIGRANTE AUTODIDACTA 
-                    <br><br>
-                    NO HUBO UNA GRAN MAQUINARIA DETRAS DE EL AL INICIO, SINO UNA MEZCLA DE SOLEDAD Y TECNOLOGIA.
-                    <br><br>
-                    LA RAIZ: SU INFANCIA EN CERANO, GUANAJUATO, LE DIO EL GUSTO POR EL REGIONAL, PERO SU MUDANZA A UTAH A LOS 15 AÑOS LE DIO EL CONTEXTO DEL CHOQUE CULTURAL.
-                    <br><br>
-                    EL TRABAJADOR ANONIMO: MIENTRAS TRABAJABA EN EL SECTOR DE COMIDA RAPIDA, UTILIZABA SUS RATOS LIBRES PARA APRENDER MUSICA. ES UN ARTISTA DE LA ERA DIGITAL: APRENDIO A TOCAR VIENDO YOUTUBE Y GRABABA SUS MAQUETAS EN PRIVADO.
-                    <br><br>
-                    EL PSEUDONIMO: EL NOMBRE JUNIOR H NACIO DE LA NECESIDAD DE OCULTAR SU IDENTIDAD. NO QUERIA QUE SUS CONOCIDOS SUPIERAN QUE CANTABA POR MIEDO A LAS CRITICAS, LO QUE LE DIO ESE AURA DE MISTERIO Y TIMIDEZ QUE AUN LO CARACTERIZA EN ENTREVISTAS.
-                </li>
-            </ul>
-        </td>
-    </tr>
-
-    <tr>
-        <td style="vertical-align: top; padding: 15px;">
-            <ul>
-                <li>
-                    EL EJE DE RANCHO HUMILDE (LA REVOLUCION DEL CORRIDO)
-                    <br><br>
-                    ESTE BLOQUE REPRESENTA SU CONSOLIDACION PROFESIONAL Y SU ENTRADA A LA INDUSTRIA DE LAS GRANDES LIGAS.
-                    <br><br>
-                    EL FICHAJE CON JIMMY HUMILDE: TRAS EL EXITO VIRAL DE SUS PRIMEROS VIDEOS, EL CEO DE RANCHO HUMILDE LO RECLUTO. FUE EL MOMENTO EN QUE DEJO UTAH PARA ESTABLECERSE EN EL EPICENTRO DEL MOVIMIENTO: LOS ANGELES.
-                    <br><br>
-                    LA HERMANDAD TUMBADA: AQUI SE FORJA SU CONEXION MAS IMPORTANTE CON NATANAEL CANO Y OVI. JUNTOS FORMARON UN FRENTE UNIDO QUE CAMBIO LAS REGLAS DEL REGIONAL MEXICANO, FUSIONANDO EL CORRIDO CON LA ESTETICA DEL TRAP Y EL HIP-HOP.
-                    <br><br>
-                    LA VOZ DIFERENTE: A DIFERENCIA DE OTROS ARTISTAS DE LA DISQUERA QUE PROYECTABAN UNA IMAGEN MAS AGRESIVA O DE FIESTA, JUNIOR H SE POSICIONO COMO EL LADO B DEL GENERO: MAS MELODICO, MELANCOLICO Y TECNICO CON LA GUITARRA.
-                </li>
-            </ul>
-        </td>
-    </tr>
-
-    <tr>
-        <td style="vertical-align: top; padding: 15px;">
-            <ul>
-                <li>
-                    ¡PROXIMAS GIRAS 2026-2027!
-                    <br><br>
-                    El ícono del corrido tumbado se presentará el próximo 27 de mayo en el Movistar Arena, en un show que promete una producción renovada y sus mayores éxitos.
-                    <br><br>
-                    Fechas Destacadas Sad Boyz Tour México 2026-2027      08/Nov/25: Tijuana - Explanada Estadio Caliente
-                    14/Nov/26: Acapulco - Arena GNP Seguros
-                    15/Nov/26: Toluca - Estadio Toluca 80
-                    16/Nov/26: Guadalajara - Plaza Nuevo Progreso
-                    19/Nov/26: Monterrey - Estadio Walmart Park
-                    21/Nov/26: Chihuahua - Estadio M Almanza
-                    22/Nov/26: Ciudad Juárez - Estadio Carta Blanca
-                    16/Jul/26: Aguascalientes - Monumental
-                    28/Jul/27: León - Explanada Poliforum
-                    15/Agos/27: CDMX - Plaza de Toros La México (Nueva fecha)
-                    19/Agos/27: Mérida - Estadio Kukulcán
-                    05/Sep/27: Veracruz - Explanada de la Expo Ylang Ylang
-                    <br><br>
-                    CONEXIONES DE ALTO NIVEL: SU CIRCULO DE AMIGOS Y COLABORADORES SE EXPANDIO A FIGURAS COMO PESO PLUMA, GABITO BALLESTEROS Y LEYENDAS DEL REGIONAL COMO EDEN MUÑOZ. ESTAS CONEXIONES LO LEGITIMARON TANTO EN EL MUNDO DEL CORRIDO BELICO COMO EN EL DE LA COMPOSICION TRADICIONAL.
-                    <br><br>
-                    EXPANSION DE MARCA: EL CONCEPTO SAD BOYZ DEJO DE SER SOLO UNA LETRA DE CANCION PARA CONVERTIRSE EN UNA MARCA DE ROPA Y UN MOVIMIENTO QUE LLENA ESTADIOS Y ENCABEZA FESTIVALES COMO EL VIVE LATINO O EL ARRE, DEMOSTRANDO QUE SU TRAYECTORIA NO DEPENDE DE UNA MODA, SINO DE UNA CONEXION EMOCIONAL CON SU GENERACION.
-                </li>
-            </ul>
-        </td>
-    </tr>
-
-    <tr align="center">
-        <td>
-            <img src="img/image1.jpeg" width="50%" alt="Junior H">
-        </td>
-    </tr>
-</table>
-
- 
-
-
-<br>
-
-<table width="90%" Align="center" Border="5">
-<tr Align="center">
-           <td width="15%"><a href="index.html">Inicio</a></td>
-          <td width="15%"><a href="villalobospag1.html">Trayectoria</a></td>
-          <td width="15%"><a href="villalobospag2.html">Albumes</a></td>
-          <td width="15%"><a href="villalobospag3.html">Merch</a></td>
-          <td width="15%"><a href="villalobospag4.html">Collage</a></td>
-                 <td width="15%"><a href="villalobospag5.html">Pedidos</a></td>
-                         <td width="15%"><a href="indexbio.html">Perfil</a></td>
-
-    </tr>
-    <table width="60%" Align="center" Border="9">
-    </tr>
-    <br>
-
-<hr align="center <hr align="center" width="100" size="5" noshade>
-
-
-        <h3 align=center>Redes Sociales</h3>
-        <table width=60% align=center border=3>
-            <tr>
-                <td><a href="https://www.tiktok.com/@junior.hach"><img src="img/tt.png" width="100%"></a></td>
-                <td><a href="https://www.instagram.com/juniorh/?hl=es"><img src="img/ig.gif" width="100%"></a></td>
-                <td><a href="hhttps://x.com/juniorh_oficial?lang=es"><img src="img/x.png" width="100%"></a></td>
-                <td><a href="hhttps://www.facebook.com/juniorhoficial/?locale=es_LA"><img src="img/fb.png" width="100%"></a></td>
-            </tr>
-        </table>
-        <br><br>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        
-</body>
-</html>
+print(out)
